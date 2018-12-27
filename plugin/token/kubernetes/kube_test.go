@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/drone/drone-vault/plugin/token"
 	"github.com/google/go-cmp/cmp"
+	"github.com/jeroenrinzema/drone-vault/plugin/token"
 )
 
 var noContext = context.Background()

@@ -8,7 +8,7 @@ platform:
 
 workspace:
   base: /go
-  path: src/github.com/drone/drone-vault
+  path: src/github.com/jeroenrinzema/drone-vault
 
 steps:
 - name: build
@@ -17,7 +17,7 @@ steps:
   - go get -u github.com/golang/dep/cmd/dep
   - dep ensure
   - go test -v -cover ./...
-  - CGO_ENABLED=0 go build -o release/linux/amd64/drone-vault github.com/drone/drone-vault/cmd/drone-vault
+  - CGO_ENABLED=0 go build -o release/linux/amd64/drone-vault github.com/jeroenrinzema/drone-vault/cmd/drone-vault
 
 - name: publish
   image: plugins/docker

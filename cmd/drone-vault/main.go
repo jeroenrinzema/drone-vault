@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/drone/drone-go/plugin/secret"
-	"github.com/drone/drone-vault/plugin"
-	"github.com/drone/drone-vault/plugin/token"
-	"github.com/drone/drone-vault/plugin/token/kubernetes"
+	"github.com/jeroenrinzema/drone-vault/plugin"
+	"github.com/jeroenrinzema/drone-vault/plugin/token"
+	"github.com/jeroenrinzema/drone-vault/plugin/token/kubernetes"
 
 	"github.com/hashicorp/vault/api"
 	"github.com/kelseyhightower/envconfig"

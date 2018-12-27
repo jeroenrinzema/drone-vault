@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/drone/drone-vault/plugin/token"
+	"github.com/jeroenrinzema/drone-vault/plugin/token"
 )
 
 // Name that identifies the auth method.
