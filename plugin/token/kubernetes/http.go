@@ -6,6 +6,7 @@ package kubernetes
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -17,7 +18,13 @@ func post(path string, in, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	res, err := http.Post(path, "application/json", buf)
+
+	transporter := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: transporter}
+	res, err := client.Post(path, "application/json", buf)
 	if err != nil {
 		return err
 	}
