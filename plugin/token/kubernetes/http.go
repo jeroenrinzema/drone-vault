@@ -9,6 +9,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 )
 
@@ -25,6 +26,9 @@ func post(path string, in, out interface{}) error {
 
 	client := &http.Client{Transport: transporter}
 	res, err := client.Post(path, "application/json", buf)
+	fmt.Println(in)
+	fmt.Println(res.StatusCode)
+	fmt.Println(res.Body)
 	if err != nil {
 		return err
 	}
