@@ -79,14 +79,14 @@ func main() {
 	config.Address = spec.VaultAddr
 	err = config.ConfigureTLS(tls)
 	if err != nil {
-		logrus.Fatalln(err)
+		logrus.Fatalln("config tls:", err)
 	}
 
 	// creates the vault client from the VAULT_*
 	// environment variables.
 	client, err := api.NewClient(config)
 	if err != nil {
-		logrus.Fatalln(err)
+		logrus.Fatalln("new client:", err)
 	}
 
 	// the token can be fetched at runtime if an auth
@@ -100,7 +100,7 @@ func main() {
 		)
 
 		if err != nil {
-			logrus.Fatalln(err)
+			logrus.Fatalln("kubernetes load:", err)
 		}
 		client.SetToken(token.Token)
 		spec.VaultTTL = token.TTL
