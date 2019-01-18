@@ -44,11 +44,15 @@ func load(address, role, mount, tokenpath string) (*token.Token, error) {
 	// create the vault endpoint address.
 	endpoint := fmt.Sprintf("%s/v1/auth/%s/login", address, mount)
 
+	fmt.Println("Loading:", endpoint)
+
 	// reads the jwt token mounted inside the container.
 	b, err := ioutil.ReadFile(tokenpath)
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println("Successfully ready token")
 
 	res := &response{}
 	req := &request{
@@ -56,6 +60,7 @@ func load(address, role, mount, tokenpath string) (*token.Token, error) {
 		Role: role,
 	}
 
+	fmt.Println("Preforming post")
 	err = post(endpoint, req, res)
 	if err != nil {
 		return nil, err
