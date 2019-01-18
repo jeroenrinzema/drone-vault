@@ -33,6 +33,7 @@ var envs = []string{
 	"VAULT_MAX_RETRIES",
 	"VAULT_TOKEN",
 	"VAULT_TLS_SERVER_NAME",
+	"VAULT_CA",
 }
 
 type config struct {
@@ -45,6 +46,7 @@ type config struct {
 	VaultAuthType  string        `envconfig:"VAULT_AUTH_TYPE"`
 	VaultAuthMount string        `envconfig:"VAULT_AUTH_MOUNT_POINT"`
 	VaultKubeRole  string        `envconfig:"VAULT_KUBERNETES_ROLE"`
+	VaultCA        string        `envconfig:"VAULT_CA"`
 }
 
 func main() {
@@ -67,9 +69,22 @@ func main() {
 		spec.Address = ":3000"
 	}
 
+	config := &api.Config{}
+	tls := &api.TLSConfig{}
+
+	if len(spec.VaultCA) > 0 {
+		tls.CACert = spec.VaultCA
+	}
+
+	config.Address = spec.VaultAddr
+	err = config.ConfigureTLS(tls)
+	if err != nil {
+		logrus.Fatalln(err)
+	}
+
 	// creates the vault client from the VAULT_*
 	// environment variables.
-	client, err := api.NewClient(nil)
+	client, err := api.NewClient(config)
 	if err != nil {
 		logrus.Fatalln(err)
 	}
@@ -83,6 +98,7 @@ func main() {
 			spec.VaultKubeRole,
 			spec.VaultAuthMount,
 		)
+
 		if err != nil {
 			logrus.Fatalln(err)
 		}

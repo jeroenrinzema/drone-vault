@@ -7,6 +7,7 @@ package plugin
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/drone/drone-go/drone"
 	"github.com/drone/drone-go/plugin/secret"
@@ -70,7 +71,9 @@ func (p *plugin) Find(ctx context.Context, req *secret.Request) (*drone.Secret, 
 
 // helper function returns the secret from vault.
 func (p *plugin) find(path string) (map[string]string, error) {
+	fmt.Println("finding:", path)
 	secret, err := p.client.Logical().Read(path)
+	fmt.Println("vault err response:", err)
 	if err != nil {
 		return nil, err
 	}
@@ -86,6 +89,7 @@ func (p *plugin) find(path string) (map[string]string, error) {
 		secret.Data = data
 	}
 
+	fmt.Println(path, "found!")
 	params := map[string]string{}
 	for k, v := range secret.Data {
 		s, ok := v.(string)
