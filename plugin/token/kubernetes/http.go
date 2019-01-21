@@ -6,6 +6,7 @@ package kubernetes
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -21,7 +22,7 @@ func post(path string, in, out interface{}) error {
 	}
 
 	transporter := &http.Transport{
-		// TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 
 	fmt.Println("Executing post")
